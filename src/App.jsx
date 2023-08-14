@@ -11,6 +11,7 @@ function App() {
   const [images, setImages] = useState([])
   const [input, setInput] = useState('')
   const [page, setPage] = useState(1)
+  const [errorMsg, setErrorMsg] = useState('')
   console.log(input)
   // const searchBtn = useRef()
   // console.log(searchBtn.current)
@@ -19,12 +20,22 @@ function App() {
     event.preventDefault()
   }
 
-  
+  const fetchImages = useCallback(async () => {
+    try{
+      if(input) {
+        setErrorMsg('')
+      }
+      const {data} = await axios.get(`${API_URL}?query=${input}&page=${page}&client_id=${accessKey}`)
+      console.log(data.results)
+    }catch(err) {
+      setErrorMsg("Error handling images. Try again later")
+    }
+  }, [page, input])
 
   useEffect(() => {
     console.log("use effct ran")
-    // moviesData()
-  }, [])
+    fetchImages()
+  }, [fetchImages])
 
   
 
