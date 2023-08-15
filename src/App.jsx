@@ -9,11 +9,12 @@ const API_URL = 'https://api.unsplash.com/search/photos'
 function App() {
 
   const [images, setImages] = useState([])
-  console.log(images)
+  // console.log(images)
   const [input, setInput] = useState('')
   const [page, setPage] = useState(1)
-  console.log(page)
+  // console.log(page)
   const [totalPages, setTotalPages] = useState(0)
+  // console.log(totalPages)
   const [errorMsg, setErrorMsg] = useState('')
   
   function handleSearch(event) {
@@ -23,9 +24,9 @@ function App() {
 
   async function getImages() {
     const {data} = await axios.get(`${API_URL}?query=${input}&page=${page}&client_id=${accessKey}`);
-    console.log(data.results)
+    // console.log(data.results)
     setImages(data.results)
-    console.log('this ran')
+    // console.log('this ran')
     setTotalPages(data.total_pages)
   }
 
@@ -33,7 +34,7 @@ function App() {
     if(page < totalPages) {
       setPage(page + 1)
     }
-    console.log('clicked show more')
+    // console.log('clicked show more')
   }
   function prevPage() {
     if(page > 1) {
@@ -61,7 +62,7 @@ function App() {
         <section className='container row gap-3'>
           {
             images.map((image) => {
-              return <img key={image.id} src={image.urls.small} />
+              return <img key={image.id} src={image.urls.small} alt={image.alt_description} className='col' style={{width: '200px'}} />
             })
           }
         </section>
